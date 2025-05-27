@@ -20,11 +20,13 @@ export function renderOrderSummary() {
 
     const deliveryOption = getDeliveryOption(deliveryOptionId);
 
+    const dateString = calculateDeliveryDate(deliveryOption);
+
     cartSummaryHTML +=
     `
     <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
       <div class="delivery-date">
-        Delivery date: ${calculateDeliveryDate(deliveryOption)}
+        Delivery date: ${dateString}
       </div>
 
       <div class="cart-item-details-grid">

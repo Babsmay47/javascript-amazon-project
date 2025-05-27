@@ -26,6 +26,11 @@ export function getDeliveryOption(deliveryOptionId) {
   return deliveryOption || deliveryOptions[0];
 }
 
+function isWeekend(date) {
+  const dayOfWeek = date.format('dddd');
+  return dayOfWeek === 'Saturday' || dayOfWeek === 'Sunday';
+}
+
 export function calculateDeliveryDate(deliveryOption) {
   const today = dayjs();
   const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');

@@ -47,8 +47,8 @@ export function renderOrderSummary() {
             <span class="update-quantity-link link-primary js-update-quantity-link" data-product-id="${matchingProduct.id}">
               Update
             </span>
-            <input class="quantity-input js-quantity-input">
-            <span class="save-quantity-link link-primary js-save-quantity-link">Save</span>
+            <input class="quantity-input js-quantity-input-${productId}">
+            <span class="save-quantity-link link-primary js-save-quantity-link" data-product-id="${matchingProduct.id}">Save</span>
             <span class="delete-quantity-link link-primary js-delete-link"
             data-product-id="${matchingProduct.id}">
               Delete
@@ -129,20 +129,27 @@ export function renderOrderSummary() {
       const productId = link.dataset.productId;
       const container = document.querySelector(`.js-cart-item-container-${productId}`);
       container.classList.add('is-editing-qunatity');
-      document.querySelectorAll('.js-save-quantity-link').forEach((link) =>{
-        link.addEventListener('click', () => {
-        const quantityInput = document.querySelector('.js-quantity-input');
-        const newQuantity = Number(quantityInput.value);
-        updateQuantity(productId, newQuantity);
-        const quantityLabel = document.querySelector(`.js-quanity-label-${productId}`);
-        quantityLabel.innerHTML = newQuantity;
-        updateCartQuantity();
-        
-        container.classList.remove('is-editing-qunatity');
-
-      })});
     });
-  })
+  });
+  document.querySelectorAll('.js-save-quantity-link').forEach((link) =>{
+    link.addEventListener('click', () => {
+      const productId = link.dataset.productId;
+      const container = document.querySelector(`.js-cart-item-container-${productId}`);
+      
+
+      const quantityInput = document.querySelector(`.js-quantity-input-${productId}`);
+      const newQuantity = Number(quantityInput.value);
+      if (newQuantity < 0 || newQuantity >= 100){
+        alert('Quantity must be at least 0 and less than 1000');
+        return;
+      }
+      updateQuantity(productId, newQuantity);
+      container.classList.remove('is-editing-qunatity');
+      renderCheckoutHeader();
+      renderOrderSummary();
+      renderPaymentSummary();
+    });
+  });
 
 
   document.querySelectorAll('.js-delivery-option').forEach((element) => {

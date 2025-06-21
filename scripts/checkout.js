@@ -4,15 +4,11 @@ import { renderCheckoutHeader } from "./checkout/checkout-header.js";
 // import '../data/cart-class.js'
 // import '../data/car.js'
 // import '../data/backend-practice.js';
-import { loadProducts } from "../data/products.js";
+import { loadProducts, loadProductsFetch } from "../data/products.js";
 import { loadCarts } from "../data/cart.js";
 
 Promise.all([
-  new Promise((resolve) => {
-    loadProducts(() => {
-      resolve('value 1');
-    });
-  }),
+  loadProductsFetch(),
   new Promise((resolve) => {
     loadCarts(() => {
       resolve();

@@ -5,10 +5,52 @@ import { renderCheckoutHeader } from "./checkout/checkout-header.js";
 // import '../data/car.js'
 // import '../data/backend-practice.js';
 import { loadProducts } from "../data/products.js";
+import { loadCarts } from "../data/cart.js";
 
-loadProducts(() => {
+Promise.all([
+  new Promise((resolve) => {
+    loadProducts(() => {
+      resolve('value 1');
+    });
+  }),
+  new Promise((resolve) => {
+    loadCarts(() => {
+      resolve();
+    })
+  }) 
+
+]).then((values) =>{
+  console.log(values);
   renderCheckoutHeader();
   renderOrderSummary();
   renderPaymentSummary();
 });
 
+/*
+new Promise((resolve) => {
+  loadProducts(() => {
+    resolve();
+  });
+}).then(() => {
+  return new Promise((resolve) => {
+    loadCarts(() => {
+      resolve();
+    });
+  });
+}).then(() => {
+    renderCheckoutHeader();
+    renderOrderSummary();
+    renderPaymentSummary();
+});
+
+*/
+/*
+loadProducts(() => {
+  loadCarts(() => {
+    renderCheckoutHeader();
+    renderOrderSummary();
+    renderPaymentSummary();
+  });
+});
+
+*/

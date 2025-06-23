@@ -7,6 +7,24 @@ import { renderCheckoutHeader } from "./checkout/checkout-header.js";
 import { loadProducts, loadProductsFetch } from "../data/products.js";
 import { loadCarts } from "../data/cart.js";
 
+
+async function loadPage() {
+  await loadProductsFetch();
+
+  const value = await new Promise((resolve) => {
+    loadCarts(() => {
+      resolve('value 3');
+    })
+  });
+
+  renderCheckoutHeader();
+  renderOrderSummary();
+  renderPaymentSummary();
+}
+loadPage();
+
+
+/*
 Promise.all([
   loadProductsFetch(),
   new Promise((resolve) => {
@@ -21,6 +39,7 @@ Promise.all([
   renderOrderSummary();
   renderPaymentSummary();
 });
+*/
 
 /*
 new Promise((resolve) => {
